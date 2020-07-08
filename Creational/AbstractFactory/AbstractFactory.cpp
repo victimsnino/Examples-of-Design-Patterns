@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <Loggers.h>
 
 enum TypeOfObject
 {
@@ -19,7 +20,6 @@ struct IRoom
 
     void AddWall(std::shared_ptr<IWall>&& wall)
     {
-        std::cout << "IRoom::AddWall" << std::endl;
         EXPECT_EQ(type, wall->type);
     }
 
@@ -28,46 +28,49 @@ struct IRoom
 
 struct SimpleWall : IWall
 {
-    SimpleWall() : IWall(Simple) {std::cout << "*** SimpleWall::SimpleWall() ***" << std::endl;}
+    SimpleWall() : IWall(Simple) {}
 };
 
 struct SimpleRoom : IRoom
 {
-    SimpleRoom() : IRoom(Simple){std::cout << "*** SimpleRoom::SimpleRoom() ***" << std::endl;}
+    SimpleRoom() : IRoom(Simple) {}
 };
 
+
+#define log_and_execute(x) std::cout << #x << std::endl; x;
+#define exec(x) log_and_execute(x)
 TEST(AbstractFactory, InitSimpleMaze)
 {
-    std::cout << "*** Simple game: we have rooms and walls in our maze. " << std::endl
+    YellowLogger() << "Simple game: we have rooms and walls in our maze. " << std::endl
               << "Maze can contain only one type of walls and rooms." <<std::endl
-              << "Both of them should have similar type. Let's create simple maze"
-              << std::endl;
-    std::unique_ptr<IRoom> room = std::make_unique<SimpleRoom>();
-    room->AddWall(std::make_shared<SimpleWall>());
-    room->AddWall(std::make_shared<SimpleWall>());
-    room->AddWall(std::make_shared<SimpleWall>());
-    room->AddWall(std::make_shared<SimpleWall>());
+              << "Both of them should have similar type. Let's create simple maze";
+
+    exec(std::unique_ptr<IRoom> room = std::make_unique<SimpleRoom>());
+    exec(room->AddWall(std::make_shared<SimpleWall>()););
+    exec(room->AddWall(std::make_shared<SimpleWall>()););
+    exec(room->AddWall(std::make_shared<SimpleWall>()););
+    exec(room->AddWall(std::make_shared<SimpleWall>()););
 }
 
 struct MagicRoom : public IRoom
 {
-    MagicRoom() : IRoom(Magic){std::cout << "**** MagicRoom::MagicRoom()" << std::endl;}
+    MagicRoom() : IRoom(Magic){}
 };
 
 struct MagicWall : public IWall
 {
-    MagicWall() : IWall(Magic) { std::cout << "**** MagicWall::MagicWall()" << std::endl;}
+    MagicWall() : IWall(Magic) { }
 };
 
 TEST(AbstractFactory, InitMagic)
 {
-    std::cout << "Ok, now copy-paste and create another room with another walls" << std::endl;
-    std::unique_ptr<IRoom> room = std::make_unique<MagicRoom>();
-    room->AddWall(std::make_shared<MagicWall>());
-    room->AddWall(std::make_shared<SimpleWall>());
-    room->AddWall(std::make_shared<MagicWall>());
-    room->AddWall(std::make_shared<MagicWall>());
-    std::cout   << "Looks like i skipped one wall..." << std::endl
+    YellowLogger() << "Ok, now copy-paste and create another room with another walls";
+    exec(std::unique_ptr<IRoom> room = std::make_unique<MagicRoom>(););
+    exec(room->AddWall(std::make_shared<MagicWall>()););
+    exec(room->AddWall(std::make_shared<SimpleWall>()););
+    exec(room->AddWall(std::make_shared<MagicWall>()););
+    exec(room->AddWall(std::make_shared<MagicWall>()););
+    YellowLogger() << "Looks like i skipped one wall..." << std::endl
                 << "But what if we will have a lot of functions? Do i need to change it every time?";
 }
 
@@ -85,16 +88,16 @@ struct MagicFactory : IAbstractFactory
 
 TEST(AbstractFactory, InitWithFactory)
 {
-    std::cout << "Lets use abstract factory" << std::endl;
-    std::unique_ptr<IAbstractFactory> factory = std::make_unique<MagicFactory>();
+    YellowLogger() << "Lets use abstract factory";
+    exec(std::unique_ptr<IAbstractFactory> factory = std::make_unique<MagicFactory>(););
 
-    std::unique_ptr<IRoom> room = factory->CreateRoom();
-    room->AddWall(factory->CreateWall());
-    room->AddWall(factory->CreateWall());
-    room->AddWall(factory->CreateWall());
-    room->AddWall(factory->CreateWall());
+    exec(std::unique_ptr<IRoom> room = factory->CreateRoom(););
+    exec(room->AddWall(factory->CreateWall()););
+    exec(room->AddWall(factory->CreateWall()););
+    exec(room->AddWall(factory->CreateWall()););
+    exec(room->AddWall(factory->CreateWall()););
 
-    std::cout << "Looks much better. I guess, we can just move it into separate function!";
+    YellowLogger() << "Looks much better. I guess, we can just move it into separate function!";
 }
 
 struct SimpleFactory : IAbstractFactory
@@ -114,10 +117,9 @@ void CreateWithFactory(std::unique_ptr<IAbstractFactory>&& factory)
 
 TEST(AbstractFactory, InitWithSeparateFunction)
 {
-    
-    std::cout << "Lets extract method and put in factory!" << std::endl;
-    CreateWithFactory(std::make_unique<MagicFactory>());
-    std::cout << "And another one!" << std::endl;
-    CreateWithFactory(std::make_unique<SimpleFactory>());
-    std::cout << "Awesome!" << std::endl;
+    YellowLogger() << "Lets extract method and put in factory!";
+    exec(CreateWithFactory(std::make_unique<MagicFactory>()););
+    YellowLogger() << "And another one!";
+    exec(CreateWithFactory(std::make_unique<SimpleFactory>()););
+    YellowLogger() << "Awesome!";
 }
