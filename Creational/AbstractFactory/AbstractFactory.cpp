@@ -37,12 +37,12 @@ struct SimpleRoom : IRoom
 };
 
 
-#define log_and_execute(x) std::cout << #x << std::endl; x;
+#define log_and_execute(x) SimpleLogger() << #x; x;
 #define exec(x) log_and_execute(x)
 TEST(AbstractFactory, InitSimpleMaze)
 {
-    YellowLogger() << "Simple game: we have rooms and walls in our maze. " << std::endl
-              << "Maze can contain only one type of walls and rooms." <<std::endl
+    YellowLogger() << "Simple game: we have rooms and walls in our maze."
+              << "Maze can contain only one type of walls and rooms."
               << "Both of them should have similar type. Let's create simple maze";
 
     exec(std::unique_ptr<IRoom> room = std::make_unique<SimpleRoom>());
@@ -70,7 +70,7 @@ TEST(AbstractFactory, InitMagic)
     exec(room->AddWall(std::make_shared<SimpleWall>()););
     exec(room->AddWall(std::make_shared<MagicWall>()););
     exec(room->AddWall(std::make_shared<MagicWall>()););
-    YellowLogger() << "Looks like i skipped one wall..." << std::endl
+    YellowLogger() << "Looks like i skipped one wall..."
                 << "But what if we will have a lot of functions? Do i need to change it every time?";
 }
 

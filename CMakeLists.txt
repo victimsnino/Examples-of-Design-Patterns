@@ -13,5 +13,8 @@ set(CMAKE_CXX_FLAGS_DEBUG "/MTd")
 add_subdirectory(googletest EXCLUDE_FROM_ALL)
 SET_TARGET_PROPERTIES (gtest PROPERTIES FOLDER gtest/)
 SET_TARGET_PROPERTIES (gtest_main PROPERTIES FOLDER gtest/)
+
+
+enable_testing()
 add_subdirectory(Creational)
 add_subdirectory(Utils)

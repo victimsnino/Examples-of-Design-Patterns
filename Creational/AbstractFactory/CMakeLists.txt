@@ -6,3 +6,5 @@ add_executable(${TARGET}
 )   
 
 target_link_libraries(${TARGET} PRIVATE Utils gtest_main)
+
+add_test(AbstractFactory AbstractFactory)
