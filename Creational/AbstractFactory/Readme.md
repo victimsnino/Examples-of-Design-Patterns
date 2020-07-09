@@ -11,7 +11,7 @@ room->AddWall(std::make_shared<SimpleWall>());
 room->AddWall(std::make_shared<SimpleWall>());
 room->AddWall(std::make_shared<SimpleWall>());
 room->AddWall(std::make_shared<SimpleWall>());
-+[       OK ] AbstractFactory.InitSimpleMaze (3 ms)
++[       OK ] AbstractFactory.InitSimpleMaze (1 ms)
 +[ RUN      ] AbstractFactory.InitMagic
 ! ********************************************************************************
 ! Ok, now copy-paste and create another room with another walls
@@ -19,18 +19,19 @@ room->AddWall(std::make_shared<SimpleWall>());
 std::unique_ptr<IRoom> room = std::make_unique<MagicRoom>();
 room->AddWall(std::make_shared<MagicWall>());
 room->AddWall(std::make_shared<SimpleWall>());
--D:\Coding\Patterns\Creational\AbstractFactory\AbstractFactory.cpp(23): error: Expected equality of these values:
+-D:\Coding\Patterns\Creational\AbstractFactory\AbstractFactory.cpp(33): error: Expected equality of these values:
   type
-    Which is: 1
+    Which is: Magic
   wall->type
-    Which is: 0
+    Which is: Simple
+Mismatch of types between room and wall
 room->AddWall(std::make_shared<MagicWall>());
 room->AddWall(std::make_shared<MagicWall>());
 ! ********************************************************************************
 ! Looks like i skipped one wall...
 ! But what if we will have a lot of functions? Do i need to change it every time?
 ! ********************************************************************************
--[  FAILED  ] AbstractFactory.InitMagic (6 ms)
+-[  FAILED  ] AbstractFactory.InitMagic (13 ms)
 +[ RUN      ] AbstractFactory.InitWithFactory
 ! ********************************************************************************
 ! Lets use abstract factory
@@ -57,7 +58,7 @@ CreateWithFactory(std::make_unique<SimpleFactory>());
 ! ********************************************************************************
 ! Awesome!
 ! ********************************************************************************
-+[       OK ] AbstractFactory.InitWithSeparateFunction (15 ms)
-+[----------] 4 tests from AbstractFactory (50 ms total)
++[       OK ] AbstractFactory.InitWithSeparateFunction (10 ms)
++[----------] 4 tests from AbstractFactory (47 ms total)
 
 ```
