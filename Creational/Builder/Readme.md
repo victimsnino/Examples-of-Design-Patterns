@@ -44,7 +44,7 @@ Car sport_car_with_turbine_2_doors(4, 2, 4, nullptr, false, true);
 ! In the last one i've not used spoiler and track... Why do i need to put it? And in the any other cases
 ! Oh... What if i will add some other features like color, height, power, size of spoiler, and more others. Do i need to fill it every time??
 ! ********************************************************************************
--[  FAILED  ] Builder.CreateACar (29 ms)
+-[  FAILED  ] Builder.CreateACar (41 ms)
 +[ RUN      ] Builder.BuildViaBuilder
 
 ! ********************************************************************************
@@ -62,7 +62,7 @@ CarBuilder().WithWheels(4).WithDoors(2).WithSeats(2).AttachTrailer(&trailer).Bui
 ! ********************************************************************************
 ! Awesome!
 ! ********************************************************************************
-+[       OK ] Builder.BuildViaBuilder (21 ms)
++[       OK ] Builder.BuildViaBuilder (26 ms)
 +[ RUN      ] Builder.BuilderAndDirector
 
 ! ********************************************************************************
@@ -70,15 +70,8 @@ CarBuilder().WithWheels(4).WithDoors(2).WithSeats(2).AttachTrailer(&trailer).Bui
 ! In the such a situation builder is responsible for 'creating' suitable materials and parts
 ! And director is responsible for 'how to create' some forms
 ! For example, building of any 'coupe' car is the same: 4 wheels, 2 doors, but it can use different types of metal of interior.
-! Let's imagine, that last things depends from the brand, then
+! Let's imagine, that last things depends from the brand, then build ferrari coupe and ford truck
 ! ********************************************************************************
-CoupeDirector ford_coupe{ FordBuilder() }
-# Add Ford's wheels
-# Add Ford's seats
-# Add Ford's door
-# Add Ford's spoiler
-# Add Ford's turbine
-# Builded car with 2 doors, 4 wheels, 2 seats, trailer exist: false, spoiler: true, turbine: true
 CoupeDirector ferrari_coupe{ FerrariBuilder() }
 # Add Ferrari's wheels
 # Add Ferrari's seats
@@ -92,13 +85,24 @@ TruckDirector ford_truck{ FordBuilder() }
 # Add Ford's door
 # Add Ford's trailer
 # Builded car with 2 doors, 6 wheels, 2 seats, trailer exist: true, spoiler: false, turbine: false
+
+! ********************************************************************************
+! Awesome! Try to inverse!
+! ********************************************************************************
+CoupeDirector ford_coupe{ FordBuilder() }
+# Add Ford's wheels
+# Add Ford's seats
+# Add Ford's door
+# Add Ford's spoiler
+# Add Ford's turbine
+# Builded car with 2 doors, 4 wheels, 2 seats, trailer exist: false, spoiler: true, turbine: true
 TruckDirector ferrari_truck{ FerrariBuilder() }
 # Add Ferrari's wheels
 # Add Ferrari's seats
 # Add Ferrari's door
 # Add Ferrari's trailer
 # Builded car with 2 doors, 6 wheels, 2 seats, trailer exist: true, spoiler: false, turbine: false
-+[       OK ] Builder.BuilderAndDirector (50 ms)
-+[----------] 3 tests from Builder (107 ms total)
++[       OK ] Builder.BuilderAndDirector (55 ms)
++[----------] 3 tests from Builder (134 ms total)
 
 ```

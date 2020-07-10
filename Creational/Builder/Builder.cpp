@@ -143,11 +143,13 @@ TEST(Builder, BuilderAndDirector)
         << "In the such a situation builder is responsible for 'creating' suitable materials and parts"
         << "And director is responsible for 'how to create' some forms"
         << "For example, building of any 'coupe' car is the same: 4 wheels, 2 doors, but it can use different types of metal of interior."
-        << "Let's imagine, that last things depends from the brand, then";
+        << "Let's imagine, that last things depends from the brand, then build ferrari coupe and ford truck";
+
+    exec(CoupeDirector ferrari_coupe{ FerrariBuilder() });
+    exec(TruckDirector ford_truck{ FordBuilder() });
+
+    note() << "Awesome! Try to inverse!";
 
     exec(CoupeDirector ford_coupe{ FordBuilder() });
-    exec(CoupeDirector ferrari_coupe{ FerrariBuilder() });
-
-    exec(TruckDirector ford_truck{ FordBuilder() });
     exec(TruckDirector ferrari_truck{ FerrariBuilder() });
 }
