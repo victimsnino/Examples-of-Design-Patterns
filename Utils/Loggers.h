@@ -77,8 +77,7 @@ struct SimpleLogger : public std::stringstream
 };
 
 
-#define log_and_execute(x) SimpleLogger() << #x; x;
-#define exec(x) log_and_execute(x)
+#define exec(x) SimpleLogger() << #x; x;
 
 #define note() YellowLogger()
 #define code_comment() GrayLogger()
