@@ -18,7 +18,7 @@ struct AI
 
 struct Robot
 {
-    Robot(const std::unique_ptr<AI>& core)
+    explicit Robot(std::unique_ptr<AI>&& core)
     {
         code_comment() << "Core attached to robot";
     }
@@ -33,11 +33,11 @@ TEST(Prototype, Init)
     exec(auto original_core = std::make_unique<AI>(););
 
     exec(auto clone_1 = std::make_unique<AI>(*original_core););
-    exec(auto robot_1 = std::make_unique<Robot>(clone_1););
+    exec(auto robot_1 = std::make_unique<Robot>(std::move(clone_1)););
 
     note() << "Awesome! Let's create one more robot!";
     exec(auto clone_2 = std::make_unique<AI>(*original_core););
-    exec(auto robot_2 = std::make_unique<Robot>(clone_2););
+    exec(auto robot_2 = std::make_unique<Robot>(std::move(clone_2)););
 }
 
 struct AI_2_0 : AI
@@ -65,11 +65,11 @@ TEST(Prototype, InitWithOneMoreAI)
     note() << "Great! let's copy old code for creating new robots!";
 
     exec(std::unique_ptr<AI> clone_1 = std::make_unique<AI_2_0>(*original_core););
-    exec(auto robot_1 = std::make_unique<Robot>(clone_1););
+    exec(auto robot_1 = std::make_unique<Robot>(std::move(clone_1)););
 
     note() << "Awesome! Let's create one more robot!";
     exec(std::unique_ptr<AI> clone_2 = std::make_unique<AI_2_0>(*original_core););
-    exec(auto robot_2 = std::make_unique<Robot>(clone_2););
+    exec(auto robot_2 = std::make_unique<Robot>(std::move(clone_2)););
 }
 
 TEST(Prototype, ExtractToProtype)
@@ -81,11 +81,11 @@ TEST(Prototype, ExtractToProtype)
     exec(std::unique_ptr<AI> original_core = std::make_unique<AI_2_0>());
 
     exec(std::unique_ptr<AI> clone_1 = original_core->Clone(););
-    exec(auto robot_1 = std::make_unique<Robot>(clone_1););
+    exec(auto robot_1 = std::make_unique<Robot>(std::move(clone_1)););
 
     note() << "Awesome! Let's create one more robot!";
     exec(std::unique_ptr<AI> clone_2 = original_core->Clone(););
-    exec(auto robot_2 = std::make_unique<Robot>(clone_2););
+    exec(auto robot_2 = std::make_unique<Robot>(std::move(clone_2)););
 
     note() << "Now we can use it with any types of AI without knowing about specific type!";
 }
