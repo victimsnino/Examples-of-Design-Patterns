@@ -34,6 +34,7 @@ std::unique_ptr<IRoom> room = std::make_unique<MagicRoom>();
 
 ```
 Continue you can find in the folder with this pattern =) <br>
+Also it contains short U<L with whole classes in the such a situation/pattern
 ## Note
 Repository and all patterns implemented with help of gtests for separating one situation from another. <br>
 Order of the "tests" is important since from one test to another become the "understanding", why do we need to use pattern and how.
