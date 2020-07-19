@@ -148,3 +148,17 @@ TEST(FactoryMethod, ApplyFactoryMethod)
         exec(room2->AddDoor(creator.CreateDoor()));
     }
 }
+
+struct CreatorBase
+{
+    virtual std::shared_ptr<Room> CreateRoom() { return std::make_shared<Room>(); }
+    virtual std::shared_ptr<Wall> CreateWall() { return std::make_shared<Wall>(); }
+    virtual std::shared_ptr<Door> CreateDoor() { return std::make_shared<Door>(); }
+};
+
+
+// Another way of implementing is inheritance
+struct CreatorWithMagicWalls : CreatorBase
+{
+    std::shared_ptr<Wall> CreateWall() override { return std::make_shared<MagicWall>(); }
+};
