@@ -130,3 +130,4 @@ room2->AddDoor(creator.CreateDoor())
 +[----------] 3 tests from FactoryMethod (188 ms total)
 
 ```
+![UML](./UML.png)

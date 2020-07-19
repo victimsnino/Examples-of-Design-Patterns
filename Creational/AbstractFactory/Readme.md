@@ -89,3 +89,5 @@ CreateWithFactory(std::make_unique<SimpleFactory>());
 +[----------] 4 tests from AbstractFactory (97 ms total)
 
 ```
+
+![UML](./UML.png)
