@@ -25,4 +25,4 @@ with open("input.txt", 'r') as f:
                 line = "-"+line
             of.writelines(line)
         of.writelines('```')
-        of.writelines('![UML](./UML.png)')
+        of.writelines('\n\n![UML](./UML.png)')
