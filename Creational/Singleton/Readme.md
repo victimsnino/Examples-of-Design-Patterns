@@ -97,4 +97,6 @@ for (int i = 0; i < count; ++i) { Car car; RegistrySingleton::GetInstance().Regi
 +[       OK ] Singleton.Singleton (40 ms)
 +[----------] 4 tests from Singleton (142 ms total)
 
-```![UML](./UML.png)
+```
+
+![UML](./UML.png)
