@@ -16,5 +16,26 @@ SET_TARGET_PROPERTIES (gtest_main PROPERTIES FOLDER gtest/)
 
 
 enable_testing()
-add_subdirectory(Creational)
+
+FOREACH(PatternFamily Creational Structural)
+    message("--> Founded patterns family: " ${PatternFamily})
+
+    SET(CUR_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${PatternFamily})
+    FILE(GLOB children RELATIVE ${CUR_DIR} ${CUR_DIR}/*)
+    FOREACH(child ${children})
+        IF(IS_DIRECTORY ${CUR_DIR}/${child})
+            set(TARGET ${child})
+            add_executable(${TARGET}
+                ${CUR_DIR}/${child}/${TARGET}.cpp
+            )   
+
+            target_link_libraries(${TARGET} PRIVATE Utils gtest_main)
+
+            add_test(${TARGET} ${TARGET})
+            SET_TARGET_PROPERTIES (${TARGET} PROPERTIES FOLDER ${PatternFamily})
+            message("----> Added " ${PatternFamily} " pattern: " ${TARGET})
+        ENDIF()
+    ENDFOREACH()
+ENDFOREACH()
+
 add_subdirectory(Utils)
